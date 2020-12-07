@@ -39,7 +39,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <getopt.h>
 
 #include "cmd.h"
-#include "conf.h"
+#include "wgnet_conf.h"
+#include "wg_conf.h"
 
 // Definitions
 // ----------------------------------------------------------------------------

@@ -32,7 +32,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "defs.h"
 #include "cmd.h"
-#include "conf.h"
+#include "wgnet_conf.h"
+#include "wg_conf.h"
+#include "wg_conf.h"
 #include "defs_colors.h"
 
 #include <string.h>
@@ -582,16 +584,99 @@ static int _bringup_interface(char * iface)
     }
 #endif
 
-    // Option 4 use wireguard library calls
-    #if 0
-        wg_add_device(iface);
-    #endif
+    // Option 4 parse the wireguard config and use the wireguard library
+#if 0
+
+    // try and load the config for the interface
+    if(!wg_conf_load_iface(iface)){
+        printf("Error loading config file for iface '%s'\n",iface);
+        return ERROR_DEVICE;
+    }
+
+
+    wg_conf_dump();
+
+    /*
+    wg_peer * ptr_last_peer = NULL;
+    //wg_peer new_peer = {
+    //    .flags = WGPEER_HAS_PUBLIC_KEY | WGPEER_REPLACE_ALLOWEDIPS
+    //};
+    wg_device new_device = {
+        .name = wg_conf_get_iface_name(),
+        .listen_port = wg_conf_get_listenport(),
+        .flags = WGDEVICE_HAS_PRIVATE_KEY | WGDEVICE_HAS_LISTEN_PORT,
+        .first_peer = NULL,
+        .last_peer = NULL
+    };
+
+    // Set up the peers
+    num_peers = wg_conf_get_numpeers();
+    if(num_peers<0){ printf("Error getting private key\n"); return ERROR_DEVICE;}
+    for(x=0;x<num_peers;x++)
+    {
+        wg_peer * P = malloc(wg_peer);
+        char * key;
+        char * ip;
+
+        key = wg_conf_get_peer_publickey(x);
+        ip = wg_conf_get_peer_cidraddress(x);
+
+        if(!key || !ip)
+        {
+            printf("Error getting info for peer %d\n",x);
+            free(P)???
+            continue;
+        }
+
+        example Save info
+        struct wg_allowedip = ip;
+        p.public_key = key
+        P.flags = WGPEER_HAS_PUBLIC_KEY | WGPEER_REPLACE_ALLOWEDIPS?????
+
+        if(ptr_last_peer==NULL){
+             ptr_last_peer=P;
+             new_device.first_peer=P;
+        }else{
+            ptr_last_peer.next_peer = P;
+            P.last_peer = P;
+        }
+
+    }
+
+    if (wg_add_device(new_device.name) < 0) {
+        perror("Unable to add device");
+        exit(1);
+    }
+
+    // Set the IP address
+    pch = conf_get_cidraddress();
+    if(!pch){ printf("Error getting IP address\n"); return ERROR_DEVICE;}
+    sprintf(cmd,"ip address add dev %s %s",config,pch);
+    ret = _run_command(cmd);
+    if(ret < 0){
+        printf("Error setting IP address, are you root?\n");
+        return ERROR_DEVICE;
+    }
+
+    if (wg_set_device(&new_device) < 0) {
+        perror("Unable to set device");
+        exit(1);
+    }
+
+    // Free all the peers?
+
+
+     */
+
+    return ERROR_SETUP_DEVICE;
+#endif
 
 
     if(g_verbose) printf("Done setup\n");
 
     return OK;
 }
+
 static int _bringup_routing()
 {
     char cmd[250];

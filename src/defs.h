@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define PROG_VERSION    "0.1.0"
+#define PROG_VERSION    "0.1.1-TESTING"
 
 // ONLY global variable
 extern bool g_verbose;

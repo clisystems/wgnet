@@ -30,7 +30,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
  ********************************************************************/
 
 #include "defs.h"
-#include "conf.h"
+#include "wgnet_conf.h"
 
 #include <string.h>
 #include <unistd.h>
